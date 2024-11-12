@@ -1,0 +1,221 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mã hóa và Giải mã Hill Cipher</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Cipher Tools</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <!-- Hill Cipher Section -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="hillDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hill Cipher
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="hillDropdown">
+                            <a class="dropdown-item" href="#encryptSection" onclick="showSection('encryptSection')">
+                                <i class="fas fa-lock"></i>Mã hóa
+                            </a>
+                            <a class="dropdown-item" href="#decryptSection" onclick="showSection('decryptSection')">
+                                <i class="fas fa-unlock"></i>Giải mã
+                            </a>
+                        </div>
+                    </li>
+    
+                    <!-- Affine Cipher Section -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="affineDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Affine Cipher
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="affineDropdown">
+                            <a class="dropdown-item" href="#affineEncryptSection" onclick="showSection('affineEncryptSection')">
+                                <i class="fas fa-lock"></i>Mã hóa
+                            </a>
+                            <a class="dropdown-item" href="#affineDecryptSection" onclick="showSection('affineDecryptSection')">
+                                <i class="fas fa-unlock"></i>Giải mã
+                            </a>
+                        </div>
+                    </li>
+    
+                    <!-- Cipher Map Section -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="cipherMapDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cipher Map
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="cipherMapDropdown">
+                            <a class="dropdown-item" href="#cipherMapEncryptSection" onclick="showSection('cipherMapEncryptSection')">
+                                <i class="fas fa-lock"></i> Mã hóa
+                            </a>
+                            <a class="dropdown-item" href="#cipherMapDecryptSection" onclick="showSection('cipherMapDecryptSection')">
+                                <i class="fas fa-unlock"></i> Giải mã
+                            </a>
+                        </div>                        
+                    </li>
+    
+                    <!-- RSA Section -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rsaDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            RSA
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="rsaDropdown">
+                            <a class="dropdown-item" href="#rsaEncryptSection" onclick="showSection('rsaEncryptSection')">
+                                <i class="fas fa-lock"></i>Mã hóa
+                            </a>
+                            <a class="dropdown-item" href="#rsaDecryptSection" onclick="showSection('rsaDecryptSection')">
+                                <i class="fas fa-unlock"></i>Giải mã
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container mt-5">
+            <div id="encryptSection" class="section">
+                <h3>Mã hóa</h3>
+                <div class="form-group">
+                    <label for="key">Nhập khóa (Key):</label>
+                    <input type="text" class="form-control" id="key" placeholder="Nhập khóa">
+                </div>
+                <div class="form-group">
+                    <label for="text">Nhập văn bản hoặc dán văn bản:</label>
+                    <textarea class="form-control" id="text" rows="5" placeholder="Nhập văn bản..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="encrypt()">Mã hóa</button>
+            </div>
+
+            <div id="decryptSection" class="section" style="display:none;">
+                <h3>Giải mã</h3>
+                <div class="form-group">
+                    <label for="keyDecrypt">Nhập khóa (Key):</label>
+                    <input type="text" class="form-control" id="keyDecrypt" placeholder="Nhập khóa">
+                </div>
+                <div class="form-group">
+                    <label for="textDecrypt">Nhập văn bản đã mã hóa:</label>
+                    <textarea class="form-control" id="textDecrypt" rows="5" placeholder="Nhập văn bản đã mã hóa..."></textarea>
+                </div>
+                <button class="btn btn-secondary" onclick="decrypt()">Giải mã</button>
+            </div>
+            <!-- Affine Cipher Encrypt Section -->
+            <div id="affineEncryptSection" class="section" style="display:none;">
+                <h3>Affine Cipher - Mã hóa</h3>
+                
+                <!-- Input cho văn bản và khóa -->
+                <input type="text" id="affinePlainText" placeholder="Nhập văn bản cần mã hóa">
+                <input type="number" id="affineKeyA" placeholder="Nhập a (khóa A)" required>
+                <input type="number" id="affineKeyB" placeholder="Nhập b (khóa B)" required>
+                
+                <button onclick="encryptAffine()">Mã hóa</button>
+
+                <!-- Hiển thị văn bản đã mã hóa -->
+                <h4>Văn bản đã mã hóa:</h4>
+                <p id="affineEncryptedText"></p>
+            </div>
+
+            <!-- Affine Cipher Decrypt Section -->
+            <div id="affineDecryptSection" class="section" style="display:none;">
+                <h3>Affine Cipher - Giải mã</h3>
+                
+                <!-- Input cho văn bản mã hóa và khóa -->
+                <input type="text" id="affineCipherText" placeholder="Nhập văn bản đã mã hóa">
+                <input type="number" id="affineKeyADecrypt" placeholder="Nhập a (khóa A)" required>
+                <input type="number" id="affineKeyBDecrypt" placeholder="Nhập b (khóa B)" required>
+                
+                <button onclick="decryptAffine()">Giải mã</button>
+
+                <!-- Hiển thị văn bản đã giải mã -->
+                <h4>Văn bản đã giải mã:</h4>
+                <p id="affineDecryptedText"></p>
+            </div>
+
+            <!-- Cipher Map Encrypt Section -->
+            <div id="cipherMapEncryptSection" class="section" style="display:none;">
+                <h3>Cipher Map - Mã hóa</h3>
+                
+                <!-- Input cho văn bản cần mã hóa và bản đồ -->
+                <input type="text" id="cipherMapPlainText" placeholder="Nhập văn bản cần mã hóa">
+                <input type="text" id="cipherMapKey" placeholder="Nhập bản đồ mã hóa (map)">
+                
+                <button onclick="encryptCipherMap()">Mã hóa</button>
+
+                <!-- Hiển thị văn bản đã mã hóa -->
+                <h4>Văn bản đã mã hóa:</h4>
+                <p id="cipherMapEncryptedText"></p>
+            </div>
+
+            <!-- Cipher Map Decrypt Section -->
+            <div id="cipherMapDecryptSection" class="section" style="display:none;">
+                <h3>Cipher Map - Giải mã</h3>
+                
+                <!-- Input cho văn bản mã hóa và bản đồ -->
+                <input type="text" id="cipherMapCipherText" placeholder="Nhập văn bản đã mã hóa">
+                <input type="text" id="cipherMapKeyDecrypt" placeholder="Nhập bản đồ giải mã (map)">
+                
+                <button onclick="decryptCipherMap()">Giải mã</button>
+
+                <!-- Hiển thị văn bản đã giải mã -->
+                <h4>Văn bản đã giải mã:</h4>
+                <p id="cipherMapDecryptedText"></p>
+            </div>
+
+            <div id="rsaEncryptSection" class="section" style="display:none;">
+                <h3>RSA - Mã hóa</h3>
+                <input type="text" id="rsaPlainText" placeholder="Nhập văn bản">
+            
+                <!-- Input p and q -->
+                <h4>Nhập hai số nguyên tố p và q:</h4>
+                <input type="number" id="rsaP" placeholder="Nhập p" required>
+                <input type="number" id="rsaQ" placeholder="Nhập q" required>
+            
+                <button onclick="generateAndDisplayKeys()">Tạo Khóa</button>
+            
+                <!-- Display the Public and Private Keys -->
+                <h4>Khóa Công Cộng (e, n):</h4>
+                <p id="publicKeyDisplay"></p>
+            
+                <h4>Khóa Riêng (d, n):</h4>
+                <p id="privateKeyDisplay"></p>
+                
+                <!-- RSA Public Key Inputs -->
+                <h4>Nhập Khóa Công Cộng:</h4>
+                <input type="number" id="rsaPublicE" placeholder="Nhập e" required>
+                <input type="number" id="rsaPublicN" placeholder="Nhập n" required>
+            
+                <button onclick="encryptRSA()">Mã hóa</button>
+            </div>
+            
+            <!-- RSA Decrypt Section -->
+            <div id="rsaDecryptSection" class="section" style="display:none;">
+                <h3>RSA - Giải mã</h3>
+                <input type="text" id="rsaCipherText" placeholder="Nhập mã đã mã hóa">
+            
+                <!-- RSA Private Key Inputs -->
+                <h4>Nhập Khóa Riêng</h4>
+                <input type="number" id="rsaPrivateD" placeholder="Nhập d" required>
+                <input type="number" id="rsaPrivateN" placeholder="Nhập n" required>
+            
+                <button onclick="decryptRSA()">Giải mã</button>
+            </div>                                                
+            <div id="alertBox" style="display:none; color: red; margin-top: 10px;"></div>
+            <h3 class="mt-4">Kết quả:</h3>
+            <textarea class="form-control" id="result" rows="5" readonly></textarea>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/big-integer/1.6.51/BigInteger.min.js"></script>
+        <script src="scripts.js"></script>
+        <script src="hill.js"></script>
+        <script src="affine.js"></script>
+        <script src="ciphermap.js"></script>
+        <script src="rsa.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
